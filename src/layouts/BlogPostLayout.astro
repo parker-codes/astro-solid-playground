@@ -1,0 +1,45 @@
+---
+const { frontmatter } = Astro.props;
+---
+
+<html class="bg-slate-900 text-white">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{frontmatter.title}</title>
+    <meta name="description" content={frontmatter.description} />
+  </head>
+
+  <body>
+    <section class="max-w-6xl mx-auto px-4 sm:px-12 mt-6 sm:mt-12">
+      <h1 class="text-4xl">{frontmatter.title}</h1>
+      <h2 class="text-lg mt-4">
+        <span class="text-gray-400">Post author:</span>
+        {frontmatter.author}
+      </h2>
+      <p class="text-lg mt-1 italic">{frontmatter.description}</p>
+    </section>
+
+    <main id="post-body" class="max-w-6xl mx-auto mt-12 px-4 sm:px-12">
+      <slot />
+    </main>
+  </body>
+</html>
+
+<style is:global lang="scss">
+  #post-body {
+    h1 {
+      @apply text-4xl;
+    }
+    h2 {
+      @apply text-2xl;
+    }
+    h3 {
+      @apply text-xl;
+    }
+    ul {
+      @apply list-disc list-inside;
+    }
+  }
+</style>
