@@ -1,0 +1,27 @@
+{
+  "name": "electrical-ephemera",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.3.2",
+    "@astrojs/solid-js": "^3.0.2",
+    "@astrojs/tailwind": "^5.0.3",
+    "astro": "^4.0.5",
+    "solid-js": "^1.8.7",
+    "solid-sortablejs": "^2.1.1",
+    "tailwindcss": "^3.3.6",
+    "typescript": "^5.3.3",
+    "xstate": "^5.3.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.4.1",
+    "sass": "^1.69.5"
+  }
+}
