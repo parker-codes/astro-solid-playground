@@ -165,5 +165,11 @@ function CheckIcon() {
 }
 
 function If(props: { cond: boolean; then: JSX.Element; else?: JSX.Element }) {
-  return <>{props.cond ? props.then : props.else ?? null}</>;
+  return (
+    <Show
+      when={props.cond}
+      children={props.then}
+      fallback={props.else ?? null}
+    />
+  );
 }
