@@ -1,43 +1,25 @@
 import { createSignal, Show, type JSX } from "solid-js";
 // @ts-expect-error No typings
 import Sortable from "solid-sortablejs";
-import { createLocalStorageSignal } from "../hooks";
-
-interface Todo {
-  id: number;
-  title: string;
-  completed: boolean;
-}
-function createTodo(title: string): Todo {
-  return {
-    id: Date.now(),
-    title,
-    completed: false,
-  };
-}
+import {
+  type Todo,
+  todos,
+  setTodos,
+  addTodo,
+  removeTodo,
+  toggleTodoCompletion,
+} from "../store";
 
 export default function Todos() {
   const [title, setTitle] = createSignal<string>("");
-  const [todos, setTodos] = createLocalStorageSignal<Todo[]>("todos", []);
 
   let inputRef: HTMLInputElement | undefined;
 
   function addItem(e: SubmitEvent) {
     e.preventDefault();
-    const newTodo = createTodo(title());
-    setTodos((todos) => [...todos, newTodo]);
+    addTodo(title());
     setTitle("");
     inputRef?.focus();
-  }
-  function removeItem(id: number) {
-    setTodos((todos) => todos.filter((todo) => todo.id !== id));
-  }
-  function toggleCompleted(id: number) {
-    setTodos((todos) =>
-      todos.map((todo) =>
-        todo.id === id ? { ...todo, completed: !todo.completed } : todo
-      )
-    );
   }
 
   return (
@@ -55,7 +37,7 @@ export default function Todos() {
       </form>
 
       <Sortable
-        items={todos()}
+        items={todos}
         setItems={setTodos}
         idField="id"
         class="mt-6 flex flex-col gap-2"
@@ -69,7 +51,7 @@ export default function Todos() {
             <div class="flex align-items gap-2">
               <button
                 type="button"
-                onClick={() => removeItem(todo.id)}
+                onClick={() => removeTodo(todo.id)}
                 class="px-2 rounded-full bg-transparent hover:bg-red-900 text-red-400 aspect-square transition-colors duration-150"
                 aria-label="Delete item"
               >
@@ -78,7 +60,7 @@ export default function Todos() {
 
               <button
                 type="button"
-                onClick={() => toggleCompleted(todo.id)}
+                onClick={() => toggleTodoCompletion(todo.id)}
                 class={`px-2 rounded-full bg-transparent ${
                   todo.completed
                     ? "hover:bg-gray-900 text-gray-400"
